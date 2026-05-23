@@ -28,9 +28,6 @@
             <td>{{ customer.last_name }}</td>
             <td>{{ customer.phone }}</td>
             <td>{{ customer.email }}</td>
-            <td>
-                <a href="{% url 'delete_customer' customer.id %}" style="color: red; font-weight: bold;">Видалити</a>
-            </td>
         </tr>
         {% empty %}
         <tr>

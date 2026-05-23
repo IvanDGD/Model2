@@ -29,9 +29,6 @@
             <td>{{ product.price }} грн</td>
             <td>{{ product.stock_quantity }} шт</td>
             <td>{{ product.seller }}</td>
-            <td>
-                <a href="{% url 'delete_product' product.id %}" style="color: red; font-weight: bold;">Видалити</a>
-            </td>
         </tr>
         {% empty %}
         <tr>

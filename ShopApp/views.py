@@ -60,24 +60,3 @@ def sales(request):
 
     sales = Sale.objects.all()
     return render(request, 'sales_list.html', {'sales': sales, 'form': form})
-
-
-def delete_customer_view(request, pk):
-    customer = get_object_or_404(Customer, pk=pk)
-    customer.delete()
-    return redirect('customers')
-
-def delete_seller_view(request, pk):
-    seller = get_object_or_404(Seller, pk=pk)
-    seller.delete()
-    return redirect('sellers')
-
-def delete_product_view(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    product.delete()
-    return redirect('products')
-
-def delete_sale_view(request, pk):
-    sale = get_object_or_404(Sale, pk=pk)
-    sale.delete()
-    return redirect('sales')

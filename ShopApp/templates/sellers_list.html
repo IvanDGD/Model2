@@ -33,9 +33,6 @@
             <td>{{ seller.email }}</td>
             <td>{{ seller.hire_date }}</td>
             <td>{{ seller.get_position_display }}</td>
-            <td>
-                <a href="{% url 'delete_seller' seller.id %}" style="color: red; font-weight: bold;">Видалити</a>
-            </td>
         </tr>
         {% empty %}
         <tr>

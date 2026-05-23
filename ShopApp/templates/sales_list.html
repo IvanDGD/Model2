@@ -31,9 +31,6 @@
             <td>{{ sale.product.name }}</td>
             <td>{{ sale.quantity }} шт</td>
             <td>{{ sale.total_amount }} грн</td>
-            <td>
-                <a href="{% url 'delete_sale' sale.id %}" style="color: red; font-weight: bold;">Видалити</a>
-            </td>
         </tr>
         {% empty %}
         <tr>
