@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h2>Список товарів</h2>
+
+<div style="margin-bottom: 20px;">
+
+    <a href="{% url 'books' %}?status=all"
+       style="padding: 8px 15px; text-decoration: none; border-radius: 4px; margin-right: 10px;
+              background-color: {% if current_filter == 'all' or not current_filter %}#4f46e5; color: white;{% else %}#eef2f5; color: #1f2937;{% endif %}">
+        Усі книги
+    </a>
+    <a href="{% url 'books' %}?status=available"
+       style="padding: 8px 15px; text-decoration: none; border-radius: 4px;
+              background-color: {% if current_filter == 'available' %}#4f46e5; color: white;{% else %}#eef2f5; color: #1f2937;{% endif %}">
+        Книги у наявності
+    </a>
+</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Назва</th>
+                <th>Автор</th>
+                <th>Жанр</th>
+                <th>Статус</th>
+                <th>Дія</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+           <tr>
+                <td>{{ book.id }}</td>
+                <td>{{ book.name }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.genre }}</td>
+                <td>{{ book.publishing }}</td>
+                <td>
+                    {% if book.is_taken %}
+                        <span style="color: red;">Занята</span>
+                    {% else %}
+                        <span style="color: green;">Доступна</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.is_authenticated %}
+                        {% if user_can_take  %}
+                            {% if book.is_taken %}
+                                <button disabled style="background-color: #ccc; color: #666;">Занята</button>
+                            {% else %}
+                                <form action="{% url 'take_book' book.id %}" method="post" style="margin: 0;">
+                                    {% csrf_token %}
+                                    <button type="submit">Взяти книгу</button>
+                                </form>
+                            {% endif %}
+
+                        {% else %}
+                            <span style="color: gray;">Ви не можете взяти книгу без групи Читатели</span>
+                        {% endif %}
+
+                    {% else %}
+                        <small><a href="{% url 'login' %}">Увійдіть</a>, щоб узяти книгу</small>
+                    {% endif %}
+                </td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="5">Товарів поки немає.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

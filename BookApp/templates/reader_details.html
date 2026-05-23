@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <div class="user-profile-body">
+
+        <div class="profile-field">
+            <div class="field-icon">🔑</div>
+            <div class="field-content">
+                <div class="field-label">ID Читателя</div>
+                <div class="field-value id-badge">{{ reader.id }}</div>
+            </div>
+        </div>
+
+        <div class="profile-field">
+            <div class="field-icon">📝</div>
+            <div class="field-content">
+                <div class="field-label">Имя</div>
+                <div class="field-value">{{ reader.name }}</div>
+            </div>
+        </div>
+
+        <div class="profile-field">
+            <div class="field-icon">📋</div>
+            <div class="field-content">
+                <div class="field-label">Фамилия</div>
+                <div class="field-value">{{ reader.surname }}</div>
+            </div>
+        </div>
+
+        <div class="profile-field">
+            <div class="field-icon">✉️</div>
+            <div class="field-content">
+                <div class="field-label">Email</div>
+                <div class="field-value"><a href="mailto:{{ reader.email }}" style="color: #4f46e5; text-decoration: none;">{{ reader.email }}</a></div>
+            </div>
+        </div>
+
+        <div class="profile-field">
+            <div class="field-icon">📞</div>
+            <div class="field-content">
+                <div class="field-label">Телефон</div>
+                <div class="field-value">{{ reader.phone }}</div>
+            </div>
+        </div>
+
+    </div>
+<div class="user-profile-card" style="margin-top: 20px;">
+    <div class="user-profile-body">
+        <h3 style="margin-top: 0; color: #1f2937; border-bottom: 2px solid #eef2f5; padding-bottom: 10px;">
+            📚 Книги на руках ({{ reader.books.count }})
+        </h3>
+
+        <!-- Получаем книги через обратную связь related_name='books' -->
+        {% for book in reader.books.all %}
+            <div style="padding: 12px; background: #f9fafb; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #4f46e5;">
+                <div style="font-weight: 600; color: #1f2937;">{{ book.name }}</div>
+                <div style="font-size: 13px; color: #6b7280; margin-top: 2px;">
+                    Автор: {{ book.author }} | Жанр: {{ book.genre }}
+                </div>
+            </div>
+        {% empty %}
+            <p style="color: #9ca3af; text-align: center; margin: 20px 0;">У этого читателя сейчас нет книг.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<p style="text-align: center;"><a href="javascript:history.back()" style="color: #4f46e5; text-decoration: none; font-weight: 500;">← Назад до списку</a></p>
+{% endblock %}
