@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h2>Додати нового покупця</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Зберегти покупця</button>
+</form>
+
+<hr>
+
+<h2>Список покупців</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ім'я</th>
+            <th>Прізвище</th>
+            <th>Телефон</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.id }}</td>
+            <td>{{ customer.first_name }}</td>
+            <td>{{ customer.last_name }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>{{ customer.email }}</td>
+            <td>
+                <a href="{% url 'delete_customer' customer.id %}" style="color: red; font-weight: bold;">Видалити</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Покупців ще немає в базі даних.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

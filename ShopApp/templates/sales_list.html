@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Оформити новий продаж</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Провести продаж</button>
+</form>
+
+<hr>
+
+<h2>Історія продажів</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Покупець</th>
+            <th>Продавець</th>
+            <th>Товар</th>
+            <th>Кількість</th>
+            <th>Загальна сума</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sale in sales %}
+        <tr>
+            <td>{{ sale.sale_date|date:"d.m.Y H:i" }}</td>
+            <td>{{ sale.customer }}</td>
+            <td>{{ sale.seller }}</td>
+            <td>{{ sale.product.name }}</td>
+            <td>{{ sale.quantity }} шт</td>
+            <td>{{ sale.total_amount }} грн</td>
+            <td>
+                <a href="{% url 'delete_sale' sale.id %}" style="color: red; font-weight: bold;">Видалити</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">Продажів ще не зафіксовано.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

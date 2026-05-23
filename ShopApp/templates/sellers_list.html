@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Додати нового продавця</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Зберегти продавця</button>
+</form>
+
+<hr>
+
+<h2>Список продавців</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ім'я</th>
+            <th>Прізвище</th>
+            <th>Телефон</th>
+            <th>Email</th>
+            <th>Дата працевлаштування</th>
+            <th>Посада</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for seller in sellers %}
+        <tr>
+            <td>{{ seller.id }}</td>
+            <td>{{ seller.first_name }}</td>
+            <td>{{ seller.last_name }}</td>
+            <td>{{ seller.phone }}</td>
+            <td>{{ seller.email }}</td>
+            <td>{{ seller.hire_date }}</td>
+            <td>{{ seller.get_position_display }}</td>
+            <td>
+                <a href="{% url 'delete_seller' seller.id %}" style="color: red; font-weight: bold;">Видалити</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">Продавців не знайдено.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

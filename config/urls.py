@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-import BookApp
+import ShopApp
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('library/', include('BookApp.urls'))
+    path('shop/', include('ShopApp.urls'))
 ]

@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Додати новий товар</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Зберегти товар</button>
+</form>
+
+<hr>
+
+<h2>Список товарів</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Назва</th>
+            <th>Опис</th>
+            <th>Ціна</th>
+            <th>Кількість на складі</th>
+            <th>Закріплений продавець</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description|default:"—" }}</td>
+            <td>{{ product.price }} грн</td>
+            <td>{{ product.stock_quantity }} шт</td>
+            <td>{{ product.seller }}</td>
+            <td>
+                <a href="{% url 'delete_product' product.id %}" style="color: red; font-weight: bold;">Видалити</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Товарів немає на складі.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
